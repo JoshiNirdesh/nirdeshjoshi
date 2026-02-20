@@ -39,35 +39,33 @@ const Skills = () => {
       viewport={{ once: false, amount: 0.3 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="flex justify-between">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 ">
-          {title}
-        </h2>
-        <div className="grid grid-cols-4 gap-6">
-          {items.map((tech, index) => (
-            <motion.div
-              key={index}
-              className="flex flex-col items-center text-center cursor-pointer"
-              whileHover={{ scale: 1.15 }}
-              transition={{ type: "spring", stiffness: 300 }}
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-8">
+        {title}
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {items.map((tech, index) => (
+          <motion.div
+            key={index}
+            className="flex flex-col items-center text-center cursor-pointer p-2"
+            whileHover={{ scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            {React.cloneElement(tech.icon, { color: tech.color })}
+            <span
+              className="mt-2 font-semibold text-base sm:text-lg"
+              style={{ color: tech.color }}
             >
-              {React.cloneElement(tech.icon, { color: tech.color })}
-              <span
-                className="mt-1 font-semibold text-lg"
-                style={{ color: tech.color }}
-              >
-                {tech.name}
-              </span>
-            </motion.div>
-          ))}
-        </div>
+              {tech.name}
+            </span>
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   );
 
   return (
-    <div className="dark:bg-[#121212]">
-      <div className="px-12 md:px-30 py-16 ">
+    <div className="dark:bg-[#121212] w-full">
+      <div className="px-6 sm:px-12 md:px-20 lg:px-32 py-12">
         {renderSection("Languages & Frameworks", languagesFrameworks)}
         {renderSection("Technologies & Tools", technologiesTools)}
       </div>
