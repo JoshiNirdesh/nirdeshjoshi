@@ -38,7 +38,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-emerald-500 rounded-full shadow-[0_0_10px_#10b981]"></div>
             <span className="mono font-bold text-xs uppercase tracking-tighter">
-              nirdesh.env
+              <a href="#about">nirdesh.env</a>
             </span>
           </div>
 
@@ -56,7 +56,7 @@ export default function App() {
               Projects
             </a>
             <a
-              href="https://github.com/nirdeshjoshi"
+              href="https://github.com/JoshiNirdesh"
               target="_blank"
               rel="noreferrer"
               className="text-white hover:text-emerald-500 transition"
@@ -69,7 +69,7 @@ export default function App() {
 
       {/* HERO SECTION */}
       <section
-        id=""
+        id="about"
         className="min-h-screen flex flex-col justify-center px-6 pt-20 max-w-7xl mx-auto relative z-10"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -110,7 +110,7 @@ export default function App() {
                 Access Pipelines
               </a>
               <a
-                href="mailto:nirdesh@example.com"
+                href="mailto:joshinirdesh10@gmail.com"
                 className="px-8 py-3 border border-white/10 hover:bg-white/5 rounded-lg font-bold transition flex items-center gap-2"
               >
                 <Mail className="w-4 h-4" /> Contact
@@ -396,20 +396,20 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.1 }}
           >
             <a
-              href="mailto:nirdesh@example.com"
+              href="mailto:joshinirdesh10@gmail.com"
               className="hover:text-white transition flex items-center gap-2 justify-center border border-emerald-500/30 px-6 py-2 rounded-full"
             >
-              <Mail className="w-4 h-4" /> EMAIL_ROOT
+              <Mail className="w-4 h-4" /> EMAIL
             </a>
 
             <a
-              href="https://linkedin.com/in/nirdeshjoshi"
+              href="https://www.linkedin.com/in/nirdesh-joshi/"
               target="_blank"
               rel="noreferrer"
               className="hover:text-white transition flex items-center gap-2 justify-center border border-emerald-500/30 px-6 py-2 rounded-full"
             >
               <FaLinkedin className="w-4 h-4" />
-              LINKEDIN_PROFILE
+              LINKEDIN
             </a>
           </motion.div>
 
