@@ -6,7 +6,7 @@ const INITIAL_HISTORY = [
 ];
 
 const COMMANDS = {
-  help: 'Available: about, skills, projects, run pipeline, clear',
+  help: "Available: about, skills, projects, run pipeline, clear",
   about:
     "Nirdesh Joshi: Aspiring Data Engineer based in Nepal. Focused on PySpark, SQL, Airflow, and building production-style data pipelines.",
   skills:
@@ -20,10 +20,12 @@ const COMMANDS = {
 export default function Terminal() {
   const [history, setHistory] = useState(INITIAL_HISTORY);
   const [input, setInput] = useState("");
-  const bottomRef = useRef(null);
+  const terminalBodyRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (rawCommand) => {
@@ -57,7 +59,10 @@ export default function Terminal() {
         </span>
       </div>
 
-      <div className="h-[420px] overflow-y-auto p-5 font-mono text-sm text-emerald-400">
+      <div
+        ref={terminalBodyRef}
+        className="h-[420px] overflow-y-auto p-5 font-mono text-sm text-emerald-400"
+      >
         {history.map((line, index) => (
           <div key={index} className="mb-2 whitespace-pre-wrap break-words">
             {line}
@@ -74,8 +79,6 @@ export default function Terminal() {
             placeholder="Type a command..."
           />
         </form>
-
-        <div ref={bottomRef} />
       </div>
     </div>
   );
