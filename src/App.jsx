@@ -1,9 +1,8 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import {
-  // Github,
   Mail,
-  // Linkedin,
   UploadCloud,
   Database,
   RefreshCw,
@@ -18,6 +17,10 @@ import BackgroundCanvas from "./components/BackgroundCanvas";
 import Terminal from "./components/Terminal";
 
 export default function App() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
@@ -66,7 +69,7 @@ export default function App() {
 
       {/* HERO SECTION */}
       <section
-        id="about"
+        id=""
         className="min-h-screen flex flex-col justify-center px-6 pt-20 max-w-7xl mx-auto relative z-10"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -405,7 +408,8 @@ export default function App() {
               rel="noreferrer"
               className="hover:text-white transition flex items-center gap-2 justify-center border border-emerald-500/30 px-6 py-2 rounded-full"
             >
-              <FaLinkedin className="w-4 h-4" />LINKEDIN_PROFILE
+              <FaLinkedin className="w-4 h-4" />
+              LINKEDIN_PROFILE
             </a>
           </motion.div>
 
