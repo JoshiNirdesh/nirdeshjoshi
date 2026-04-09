@@ -35,10 +35,10 @@ export default function App() {
       {/* Navigation */}
       <nav className="fixed w-full z-50 px-6 py-4 glass-nav backdrop-blur-md bg-black/20 border-b border-white/5">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" id="/">
             <div className="w-3 h-3 bg-emerald-500 rounded-full shadow-[0_0_10px_#10b981]"></div>
             <span className="mono font-bold text-xs uppercase tracking-tighter">
-              <a href="#about">nirdesh.env</a>
+              <a href="/">nirdesh.env</a>
             </span>
           </div>
 
