@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export default function BackgroundCanvas() {
   const canvasRef = useRef(null);
@@ -7,109 +7,75 @@ export default function BackgroundCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId;
     let dots = [];
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      createDots();
-    };
-
-    class Dot {
-      constructor(x, y, radius, dx, dy) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.dx = dx;
-        this.dy = dy;
+    class Node {
+      constructor(width, height) {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
       }
 
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(16, 185, 129, 0.7)";
-        ctx.fill();
-      }
-
-      update() {
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-          this.dx = -this.dx;
-        }
-
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-          this.dy = -this.dy;
-        }
-
-        this.x += this.dx;
-        this.y += this.dy;
-        this.draw();
+      update(width, height) {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
       }
     }
 
-    const createDots = () => {
+    function init() {
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
       dots = [];
-      const numberOfDots = Math.min(90, Math.floor(window.innerWidth / 18));
-
-      for (let i = 0; i < numberOfDots; i++) {
-        const radius = Math.random() * 2 + 1;
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const dx = (Math.random() - 0.5) * 0.4;
-        const dy = (Math.random() - 0.5) * 0.4;
-
-        dots.push(new Dot(x, y, radius, dx, dy));
+      for (let i = 0; i < 70; i++) {
+        dots.push(new Node(canvas.width, canvas.height));
       }
-    };
+    }
 
-    const connectDots = () => {
+    function animate() {
+      if (!canvas || !ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.lineWidth = 0.5;
       for (let i = 0; i < dots.length; i++) {
+        dots[i].update(canvas.width, canvas.height);
         for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x;
-          const dy = dots[i].y - dots[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 120) {
+          const dist = Math.sqrt((dots[i].x - dots[j].x) ** 2 + (dots[i].y - dots[j].y) ** 2);
+          if (dist < 180) {
+            ctx.strokeStyle = `rgba(16, 185, 129, ${1 - dist / 180})`;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.12 - distance / 1000})`;
-            ctx.lineWidth = 1;
             ctx.moveTo(dots[i].x, dots[i].y);
             ctx.lineTo(dots[j].x, dots[j].y);
             ctx.stroke();
           }
         }
       }
+      requestAnimationFrame(animate);
+    }
+
+    const handleResize = () => {
+      init();
     };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].update();
-      }
-
-      connectDots();
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    resizeCanvas();
+    window.addEventListener('resize', handleResize);
+    init();
     animate();
 
-    window.addEventListener("resize", resizeCanvas);
-
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 -z-10 opacity-70"
+      id="bg-canvas"
+      className="fixed top-0 left-0 -z-10 opacity-40 pointer-events-none"
     />
   );
 }
